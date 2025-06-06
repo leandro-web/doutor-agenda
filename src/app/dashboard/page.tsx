@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import { db } from "@/db";
@@ -7,7 +8,6 @@ import { usersToClinicsTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 import SignOutButton from "./components/sing-out-button";
-
 const DashboardPage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -30,6 +30,13 @@ const DashboardPage = async () => {
       <h1>Dashboard</h1>
       <p>{session?.user?.name}</p>
       <p>{session?.user?.email}</p>
+      <Image
+        src={session?.user?.image as string}
+        alt="User"
+        width={100}
+        height={100}
+        className="rounded-full"
+      />
       <SignOutButton />
     </div>
   );
